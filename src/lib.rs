@@ -1,6 +1,9 @@
 use std::thread::JoinHandle;
+use std::thread;
 
-pub struct ThreadPool;
+pub struct ThreadPool {
+    threads: Vec<thread::JoinHandle<()>>,
+}
 
 impl ThreadPool {
     pub fn new(size: usize) -> ThreadPool {
@@ -13,7 +16,13 @@ impl ThreadPool {
         /// The `new` function will panic if the size is zero.
         assert!(size > 0);
 
-        ThreadPool
+        let mut threads = Vec::with_capacity(size);
+
+        for _ in 0..size {
+
+        }
+
+        ThreadPool { threads }
     }
 
     pub fn execute<F>(&self, f: F)
@@ -21,4 +30,8 @@ impl ThreadPool {
     F: FnOnce() + Send + 'static,
     {
     }
+
+    // pub fn build(size: usize) -> Result<ThreadPool, PoolCreationError> {
+    //
+    // }
 }
